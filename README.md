@@ -51,3 +51,23 @@ diubah menjadi
 `ClientBuilder::from_uri(Uri::from_static("ws://127.0.0.1:8080"))`
 
 Websocket protocol merpakan protokol komunikasi antara client dan server. Sehingga keduanya harus menggunakan port yang sama agar dapat berkomunikasi. Sehingga ketika port yang ada pada client.rs akan diubah, maka port yang ada pada server.rs juga harus diubah.
+
+### 2.3. Small changes. Add some information to client
+#### Server
+![alt text](images/2_3_Server.png)
+#### Client 1
+![alt text](images/2_3_Client1.png)
+#### Client 2
+![alt text](images/2_3_Client2.png)
+#### Client 3
+![alt text](images/2_3_Client3.png)
+
+Pada bagian ini, ditambahkan informasi mengenai client yang terhubung pada server. Informasi tersebut berupa IP address dan port number dari client yang terhubung.
+
+Pada server.rs, ditambahkan kode berikut:
+```rust
+    let custom_text = addr.to_string() + ": " + text;
+    bcast_tx.send(custom_text.into())?;
+```
+
+Saya menambahkan informasi pada bagian tersebut dikarenakan pada method send() dikirimkan data stream yang berisi informasi pesan.

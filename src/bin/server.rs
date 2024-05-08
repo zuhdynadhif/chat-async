@@ -23,8 +23,9 @@ async fn handle_connection(
                 match incoming {
                     Some(Ok(msg)) => {
                         if let Some(text) = msg.as_text() {
-                            println!("From client {addr:?} {text:?}");
-                            bcast_tx.send(text.into())?;
+                            println!("Zuhdy's Computer - From client {addr:?} {text:?}");
+                            let custom_text = addr.to_string() + ": " + text;
+                            bcast_tx.send(custom_text.into())?;
                         }
                     }
                     Some(Err(err)) => return Err(err.into()),
@@ -47,7 +48,7 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
 
     loop {
         let (socket, addr) = listener.accept().await?;
-        println!("New connection from {addr:?}");
+        println!("New connection from Zuhdy's Computer {addr:?}");
         let bcast_tx = bcast_tx.clone();
         tokio::spawn(async move {
             // Wrap the raw TCP stream into a websocket.
